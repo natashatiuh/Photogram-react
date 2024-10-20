@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import Input from "./Input";
 import axios from "axios";
 import ModalSignIn from "./ModalSignIn";
+import { useNavigate } from "react-router-dom";
 
 const ActiveModal = {
   None: 0,
@@ -23,6 +24,8 @@ export default function AuthPage() {
   const [fullName, setFullName] = useState("");
   const [dateOfBirth, setDOB] = useState(new Date());
   const [age, setAge] = useState(0);
+
+  const navigate = useNavigate();
 
   const today = new Date();
 
@@ -50,6 +53,7 @@ export default function AuthPage() {
         localStorage.setItem("accessToken", response.data.tokens.accessToken);
         localStorage.setItem("refreshToken", response.data.tokens.refreshToken);
         setSubmitted(true);
+        navigate("/user-profile");
       })
       .catch((error) => {
         console.error("Sign-in failed!", error);
@@ -106,6 +110,7 @@ export default function AuthPage() {
         localStorage.setItem("accessToken", response.data.tokens.accessToken);
         localStorage.setItem("refreshToken", response.data.tokens.refreshToken);
         setSubmitted(true);
+        navigate("/user-profile");
       })
       .catch((error) => {
         console.error("Sign-up failed!", error);

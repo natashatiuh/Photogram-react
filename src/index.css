@@ -112,3 +112,9 @@ code {
 .user-info {
   text-align: center;
 }
+
+.user-profile {
+  text-align: center;
+  align-items: center;
+  font-size: 42px;
+}
