@@ -52,10 +52,12 @@ export default function AuthPage() {
         console.log("Sign-in successful!", tokens);
         localStorage.setItem("accessToken", response.data.tokens.accessToken);
         localStorage.setItem("refreshToken", response.data.tokens.refreshToken);
+        localStorage.setItem("userId", response.data.tokens.userId);
         setSubmitted(true);
         navigate("/user-profile");
       })
       .catch((error) => {
+        alert("Email or password is incorrect!");
         console.error("Sign-in failed!", error);
       });
   }
@@ -105,14 +107,17 @@ export default function AuthPage() {
           alert("Passwords do not match!");
           return;
         }
+
         const { tokens } = response.data;
         console.log("Sign-up successful!", tokens);
         localStorage.setItem("accessToken", response.data.tokens.accessToken);
         localStorage.setItem("refreshToken", response.data.tokens.refreshToken);
+        localStorage.setItem("userId", response.data.tokens.userId);
         setSubmitted(true);
         navigate("/user-profile");
       })
       .catch((error) => {
+        alert("Email or username already exist!");
         console.error("Sign-up failed!", error);
       });
   }
@@ -132,6 +137,7 @@ export default function AuthPage() {
             setSubmitted(false);
             setEmail("");
             setPassword("");
+            setSubmitted(false);
           }}
           title={"Sign In"}
         >
