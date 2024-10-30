@@ -4,38 +4,76 @@ import Avatar from "./Avatar";
 import UserInfo from "./UserInfo";
 import Button from "../AuthPage/Button";
 import Modal from "../AuthPage/Modal";
-import Input from "../AuthPage/Input";
+import ChangeUserName from "./ChangeUsername";
+import ChangeFullName from "./ChangeFullName";
+import ChangeBio from "./ChangeBio";
+import ChangeBirthDate from "./ChangeBirthDate";
+import ChangeEmail from "./ChangeEmail";
+import ChangePassword from "./ChangePassword";
 
 export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newUsername, setNewUsername] = useState("");
-  const [newFullName, setNewFullName] = useState("");
-  const [newBio, setNewBio] = useState("");
-  const [newBirthDate, setNewBirthdate] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
 
   function toggleModal() {
     setIsModalOpen(!isModalOpen);
+  }
+
+  function handleUsernameChange(newUsername) {
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      userName: newUsername,
+    }));
+  }
+
+  function handleFullNameChange(newFullName) {
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      fullName: newFullName,
+    }));
+  }
+
+  function handleBioChange(newBio) {
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      bio: newBio,
+    }));
+  }
+
+  function handleBirthDateChange(newBirthDate) {
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      dateOfBirth: newBirthDate,
+    }));
+  }
+
+  function handleEmailChange(newEmail) {
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      email: newEmail,
+    }));
   }
 
   useEffect(() => {
     async function fetchUserInfo() {
       try {
         const token = localStorage.getItem("accessToken");
+
         const response = await fetch(`http://localhost:4000/users/user`, {
           method: "GET",
           headers: {
             Authorization: token,
+            "Content-type": "application/json",
           },
         });
+
         if (!response.ok) {
           throw new Error("Failed to fetch data!");
         }
         const data = await response.json();
+
         setUserInfo(data.userInfo);
         setLoading(false);
       } catch (error) {
@@ -73,60 +111,12 @@ export default function UserProfile() {
       {isModalOpen && (
         <div className="edit-modal">
           <Modal onClose={toggleModal} title="Edit your information">
-            <div className="input-group">
-              <Input
-                type="text"
-                placeholder="New username..."
-                value={newUsername}
-                onChange={(el) => setNewUsername(el.target.value)}
-              />
-              <Button>Edit</Button>
-            </div>
-            <div className="input-group">
-              <Input
-                type="text"
-                placeholder="New fullname..."
-                value={newFullName}
-                onChange={(el) => setNewFullName(el.target.value)}
-              />
-              <Button>Edit</Button>
-            </div>
-            <div className="input-group">
-              <Input
-                type="text"
-                placeholder="New bio..."
-                value={newBio}
-                onChange={(el) => setNewBio(el.target.value)}
-              />
-              <Button>Edit</Button>
-            </div>
-            <div className="input-group">
-              <Input
-                type="text"
-                placeholder="New birth date..."
-                value={newBirthDate}
-                onChange={(el) => setNewBirthdate(el.target.value)}
-              />
-              <Button>Edit</Button>
-            </div>
-            <div className="input-group">
-              <Input
-                type="text"
-                placeholder="New email..."
-                value={newEmail}
-                onChange={(el) => setNewEmail(el.target.value)}
-              />
-              <Button>Edit</Button>
-            </div>
-            <div className="input-group">
-              <Input
-                type="text"
-                placeholder="New password..."
-                value={newPassword}
-                onChange={(el) => setNewPassword(el.target.value)}
-              />
-              <Button>Edit</Button>
-            </div>
+            <ChangeUserName onUsernameChange={handleUsernameChange} />
+            <ChangeFullName onFullNameChange={handleFullNameChange} />
+            <ChangeBio onBioChange={handleBioChange} />
+            <ChangeBirthDate onBirthDateChange={handleBirthDateChange} />
+            <ChangeEmail onEmailChange={handleEmailChange} />
+            <ChangePassword />
           </Modal>
         </div>
       )}
