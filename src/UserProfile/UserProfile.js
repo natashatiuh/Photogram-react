@@ -15,10 +15,15 @@ export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOneOpen, setIsModalOneOpen] = useState(false);
+  const [isModalTwoOpen, setIsModalTwoOpen] = useState(false);
 
-  function toggleModal() {
-    setIsModalOpen(!isModalOpen);
+  function toggleModalOne() {
+    setIsModalOneOpen(!isModalOneOpen);
+  }
+
+  function toggleModalTwo() {
+    setIsModalTwoOpen(!isModalTwoOpen);
   }
 
   function handleUsernameChange(newUsername) {
@@ -105,16 +110,33 @@ export default function UserProfile() {
         )}
       </div>
       <div className="edit-info">
-        <Button onClick={toggleModal}>Edit info</Button>
+        <Button onClick={toggleModalOne}>Edit User Info</Button>
+        <Button onClick={toggleModalTwo}>Edit Auth Credentials</Button>
       </div>
 
-      {isModalOpen && (
+      {isModalOneOpen && (
         <div className="edit-modal">
-          <Modal onClose={toggleModal} title="Edit your information">
-            <ChangeUserName onUsernameChange={handleUsernameChange} />
-            <ChangeFullName onFullNameChange={handleFullNameChange} />
-            <ChangeBio onBioChange={handleBioChange} />
-            <ChangeBirthDate onBirthDateChange={handleBirthDateChange} />
+          <Modal onClose={toggleModalOne} title="Edit your information">
+            <ChangeUserName
+              userName={userInfo.userName}
+              onUsernameChange={handleUsernameChange}
+            />
+            <ChangeFullName
+              fullName={userInfo.fullName}
+              onFullNameChange={handleFullNameChange}
+            />
+            <ChangeBio bio={userInfo.bio} onBioChange={handleBioChange} />
+            <ChangeBirthDate
+              birthDate={userInfo.birthDate}
+              onBirthDateChange={handleBirthDateChange}
+            />
+          </Modal>
+        </div>
+      )}
+
+      {isModalTwoOpen && (
+        <div className="edit-modal">
+          <Modal onClose={toggleModalTwo} title="Edit Auth Credentials">
             <ChangeEmail onEmailChange={handleEmailChange} />
             <ChangePassword />
           </Modal>

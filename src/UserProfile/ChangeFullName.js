@@ -2,7 +2,7 @@ import Input from "../AuthPage/Input";
 import Button from "../AuthPage/Button";
 import { useState } from "react";
 
-export default function ChangeFullName({ onFullNameChange }) {
+export default function ChangeFullName({ onFullNameChange, fullName }) {
   const [newFullName, setNewFullName] = useState("");
 
   async function editFullName() {
@@ -44,7 +44,7 @@ export default function ChangeFullName({ onFullNameChange }) {
     <div className="input-group">
       <Input
         type="text"
-        placeholder="New fullname..."
+        placeholder={fullName}
         value={newFullName}
         onChange={(el) => setNewFullName(el.target.value)}
       />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../AuthPage/Input";
 import Button from "../AuthPage/Button";
 
-export default function ChangeBio({ onBioChange }) {
+export default function ChangeBio({ onBioChange, bio }) {
   const [newBio, setNewBio] = useState("");
 
   async function editBio() {
@@ -40,7 +40,7 @@ export default function ChangeBio({ onBioChange }) {
     <div className="input-group">
       <Input
         type="text"
-        placeholder="New bio..."
+        placeholder={bio}
         value={newBio}
         onChange={(el) => setNewBio(el.target.value)}
       />

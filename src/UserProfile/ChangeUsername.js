@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../AuthPage/Input";
 import Button from "../AuthPage/Button";
 
-export default function ChangeUserName({ onUsernameChange }) {
+export default function ChangeUserName({ onUsernameChange, userName }) {
   const [newUsername, setNewUsername] = useState("");
 
   async function editUserName() {
@@ -41,7 +41,7 @@ export default function ChangeUserName({ onUsernameChange }) {
     <div className="input-group">
       <Input
         type="text"
-        placeholder="New username..."
+        placeholder={userName}
         value={newUsername}
         onChange={(el) => setNewUsername(el.target.value)}
       />

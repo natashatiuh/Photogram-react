@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../AuthPage/Input";
 import Button from "../AuthPage/Button";
 
-export default function ChangeBirthDate({ onBirthDateChange }) {
+export default function ChangeBirthDate({ onBirthDateChange, birthDate }) {
   const [newBirthDate, setNewBirthdate] = useState("");
 
   async function editBirthDate() {
@@ -40,7 +40,7 @@ export default function ChangeBirthDate({ onBirthDateChange }) {
     <div className="input-group">
       <Input
         type="date"
-        placeholder="New birth date..."
+        placeholder={birthDate}
         value={newBirthDate}
         onChange={(el) => setNewBirthdate(el.target.value)}
       />
